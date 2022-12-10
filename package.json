@@ -1,0 +1,32 @@
+{
+  "name": "run-api-client",
+  "version": "1.0.0",
+  "description": "client js for run api",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Idiot-Alex/run-api-client-js.git"
+  },
+  "keywords": [
+    "run-api",
+    "client-js"
+  ],
+  "author": "hotstrip",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Idiot-Alex/run-api-client-js/issues"
+  },
+  "homepage": "https://github.com/Idiot-Alex/run-api-client-js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.3.1",
+    "jest": "^29.3.1"
+  },
+  "dependencies": {
+    "ajax-hook": "^2.1.3"
+  }
+}

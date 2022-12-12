@@ -1,6 +1,6 @@
 import { init, destroy } from './util'
 
-export const runApi = {
+export default {
     init: () => init(),
     destroy: () => destroy()
 }

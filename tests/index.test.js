@@ -1,15 +1,15 @@
-import { runApi } from "dist/bundle"
+import RunApi from "dist/bundle"
 import axios from "axios"
 
 describe('test index js', function() {
     beforeEach(() => {
         console.log("beforeEach for init...")
-        runApi.init()
+        RunApi.init()
     })
 
     afterEach(() => {
         console.log("afterEach for destroy...")
-        runApi.destroy()
+        RunApi.destroy()
     })
 
     test('use axios request success', async () => {

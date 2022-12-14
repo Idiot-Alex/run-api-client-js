@@ -2,16 +2,15 @@ import RunApi from "dist/bundle"
 
 describe('test stomp js', function() {
 
-    test('test initWS', () => {
-        const successCb = function (data) {
-            console.log(data)
+    test('test initWS', async () => {
+        const successCb = (data) => {
+            console.log(`successCb: `, data)
         }
-        const errorCb = function (error) {
-            console.log(error)
+        const errorCb = (error) => {
+            console.log(`errorCb: `, error)
         }
-        const ws = RunApi.ws('')
-        ws.connect({}, successCb, errorCb)
+        const ws = RunApi.ws('http://127.0.0.1:8080/stomp/endpoint')
         ws.initWebSocket()
-        expect(ws.url).toHaveLength(0)
+        await ws.connect({}, successCb, errorCb)
     })
 })

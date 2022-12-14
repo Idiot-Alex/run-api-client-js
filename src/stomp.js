@@ -16,6 +16,15 @@ export class RunApiWebSocket {
             console.log(`error: current socketClient has not be init.`)
             return
         }
-        this.socketClient.connect(option, successCb, errorCb)
+        return new Promise((resolve, reject) => {
+            this.socketClient.connect(option,
+                function connectCallback (success) {
+                    console.log('webSocket连接成功:', success)
+                },
+                // 连接失败时的回调函数
+                function errorCallBack (error) {
+                    console.log('webSocket连接失败:', error)
+                })
+        })
     }
 }

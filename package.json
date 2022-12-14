@@ -5,7 +5,8 @@
   "main": "dist/bundle.js",
   "scripts": {
     "build": "rimraf ./dist && rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "test1": "jest tests/stomp.test.js"
   },
   "repository": {
     "type": "git",

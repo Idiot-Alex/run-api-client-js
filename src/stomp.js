@@ -11,20 +11,33 @@ export class RunApiWebSocket {
         this.socketClient = Stomp.over(webSocket)
         return this.socketClient
     }
-    connect(option, successCb, errorCb) {
-        if (!this.socketClient) {
-            console.log(`error: current socketClient has not be init.`)
-            return
-        }
+    connect(option) {
         return new Promise((resolve, reject) => {
+            if (!checkValid(this.socketClient)) {
+                reject('need init first')
+            }
+            console.log(`ready to connect websocket url: ${this.url}`)
             this.socketClient.connect(option,
-                function connectCallback (success) {
-                    console.log('webSocket连接成功:', success)
+                (data) => {
+                    resolve(data)
                 },
-                // 连接失败时的回调函数
-                function errorCallBack (error) {
-                    console.log('webSocket连接失败:', error)
+                (error) => {
+                    reject(error)
                 })
         })
     }
+    disconnect() {
+        if (checkValid(this.socketClient)) {
+            console.log(`disconnect websocket url: ${this.url}`)
+            this.socketClient.disconnect()
+        }
+    }
+}
+
+function checkValid(socketClient) {
+    if (!socketClient) {
+        console.log(`error: current socketClient has not be init.`)
+        return false
+    }
+    return true
 }

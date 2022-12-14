@@ -1,7 +1,7 @@
-import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
-import commonjs from "rollup-plugin-commonjs"
-import json from "rollup-plugin-json"
+import resolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+import commonjs from "@rollup/plugin-commonjs"
+import json from "@rollup/plugin-json"
 import { author } from './package.json'
 const license = require("rollup-plugin-license")
 
@@ -13,11 +13,13 @@ const config = {
         // exports: "default"
     },
     plugins: [
-        resolve(),
+        resolve({
+            preferBuiltins: true
+        }),
         json(),
         commonjs(),
         babel({
-            runtimeHelpers: true,
+            babelHelpers: "runtime",
             exclude: "node_modules/**" // 只编译我们的源代码
         }),
         license({

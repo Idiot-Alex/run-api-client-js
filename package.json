@@ -26,6 +26,10 @@
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime-corejs3": "^7.20.6",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^23.0.4",
+    "@rollup/plugin-json": "^5.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "axios": "^1.2.1",
     "babel-jest": "^29.3.1",
     "babel-loader": "^9.1.0",
@@ -33,13 +37,11 @@
     "jest-environment-jsdom": "^29.3.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.26.10",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-license": "^2.2.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "rollup-plugin-license": "^2.2.0"
   },
   "dependencies": {
-    "ajax-hook": "^2.1.3"
+    "ajax-hook": "^2.1.3",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3"
   }
 }

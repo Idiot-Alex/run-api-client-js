@@ -1,6 +1,9 @@
-import { init, destroy } from './util'
+import { init, destroy } from './proxy'
+import { RunApiWebSocket } from './stomp'
+
 
 export default {
     init: () => init(),
-    destroy: () => destroy()
+    destroy: () => destroy(),
+    ws: (url) => new RunApiWebSocket(url)
 }

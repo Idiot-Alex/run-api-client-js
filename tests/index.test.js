@@ -27,4 +27,5 @@ describe('test index js', function() {
             expect(JSON.stringify(err)).toMatch(/Network Error/)
         })
     })
+
 })

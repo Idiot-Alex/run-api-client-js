@@ -9,7 +9,7 @@ describe('test proxy js', function() {
 
     afterEach(() => {
         console.log("afterEach for destroy...")
-        RunApi.destroy()
+        // RunApi.destroy()
     })
 
     test('use axios request success', async () => {

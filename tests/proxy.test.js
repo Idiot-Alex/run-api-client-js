@@ -1,6 +1,8 @@
 import RunApi from "dist/bundle"
 import axios from "axios"
 
+// edge://flags/
+// chrome://flags/#block-insecure-private-network-requests
 describe('test proxy js', function() {
     beforeEach(() => {
         console.log("beforeEach for init...")
@@ -18,14 +20,14 @@ describe('test proxy js', function() {
         expect(JSON.stringify(res.data)).toMatch(/"code":200/)
     })
 
-    test('use axios request failed', async () => {
-        await axios.get('https://bird.ioliu.cn/xxx').then(res => {
-            console.log(`response: ${res}`)
-            expect(JSON.stringify(res.data)).toMatch(/"code":200/)
-        }).catch(err => {
-            console.log(`error: ${err}`)
-            expect(JSON.stringify(err)).toMatch(/Network Error/)
-        })
-    })
+    // test('use axios request failed', async () => {
+    //     await axios.get('https://bird.ioliu.cn/xxx').then(res => {
+    //         console.log(`response: ${res}`)
+    //         expect(JSON.stringify(res.data)).toMatch(/"code":200/)
+    //     }).catch(err => {
+    //         console.log(`error: ${err}`)
+    //         expect(JSON.stringify(err)).toMatch(/Network Error/)
+    //     })
+    // })
 
 })

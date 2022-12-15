@@ -1,26 +1,27 @@
 import { proxy, unProxy } from "ajax-hook"
-import { upload } from "./api"
+import { upload, test } from "./api"
+import axios from "axios";
 
 let DATA_MAP = {}
 export function init() {
     DATA_MAP = {}
     proxy({
         //请求发起前进入
-        onRequest: (config, handler) => {
+        onRequest: async (config, handler) => {
             console.log(`config: ${_stringify(config)}`)
-            recorderData(config)
+            await recorderData(config)
             handler.next(config);
         },
         //请求发生错误时进入，比如超时；注意，不包括http状态码错误，如404仍然会认为请求成功
-        onError: (err, handler) => {
+        onError: async (err, handler) => {
             console.log(`error: ${_stringify(err)}`)
-            recorderData(err)
+            await recorderData(err)
             handler.next(err)
         },
         //请求成功后进入
-        onResponse: (response, handler) => {
+        onResponse: async (response, handler) => {
             console.log(`response: ${_stringify(response)}`)
-            recorderData(response)
+            await recorderData(response)
             handler.next(response)
         }
     })
@@ -38,42 +39,50 @@ export function destroy() {
  * @param data XhrRequestConfig | XhrError | XhrResponse
  */
 function recorderData(data) {
-    if (data.type) {
-        // 判断是 XhrError
-        const key = data?.config?.url
-        DATA_MAP[key] = {
-            ...DATA_MAP[key],
-            code: -1,
-            msg: data.type
+    return new Promise((resolve, reject) => {
+        if (data.type) {
+            // 判断是 XhrError
+            const key = data?.config?.url
+            DATA_MAP[key] = {
+                ...DATA_MAP[key],
+                code: -1,
+                msg: data.type
+            }
+            uploadData(key, resolve, reject)
+        } else if (data.response) {
+            // 判断是 XhrResponse
+            const key = data?.config?.url
+            DATA_MAP[key] = {
+                ...DATA_MAP[key],
+                code: data.status,
+                msg: data.statusText,
+                res: data.response
+            }
+            uploadData(key, resolve, reject)
+        } else {
+            // XhrRequestConfig
+            const key = data?.url
+            DATA_MAP[key] = {
+                config: data
+            }
+            console.log(`dataMap: ${_stringify(DATA_MAP)}`)
+            resolve()
         }
-        uploadData(key)
-    } else if (data.response) {
-        // 判断是 XhrResponse
-        const key = data?.config?.url
-        DATA_MAP[key] = {
-            ...DATA_MAP[key],
-            code: data.status,
-            msg: data.statusText,
-            res: data.response
-        }
-        uploadData(key)
-    } else {
-        // XhrRequestConfig
-        const key = data?.url
-        DATA_MAP[key] = {
-            config: data
-        }
-    }
-
+    })
 }
 
-function uploadData(key) {
+async function uploadData(key, resolve, reject) {
     const data = DATA_MAP[key]
     console.log(`data: uploadData.......${_stringify(data)}`)
-    upload(data).then(res => {
+    await axios.get('https://bird.ioliu.cn/v1').then(res => {
+        console.log(`response: ${res}`)
+    })
+    await test().then(res => {
         console.log(`res: ${res}`)
+        resolve()
     }).catch(error => {
         console.log(`error: ${error}`)
+        reject(error)
     })
 }
 

@@ -1,8 +1,6 @@
 import { proxy, unProxy } from "ajax-hook"
-import { RunApiWebSocket } from "./stomp"
 
 export function init() {
-    const ws = initWS()
     proxy({
         //请求发起前进入
         onRequest: (config, handler) => {
@@ -26,12 +24,6 @@ export function init() {
 export function destroy() {
     unProxy()
     console.log('destroy success...')
-}
-
-export function initWS() {
-    const ws = new RunApiWebSocket('http://127.0.0.1:8080/stomp/endpoint')
-    ws.initWebSocket()
-    return ws
 }
 
 function _stringify(obj) {

@@ -1,35 +1,49 @@
 import { proxy, unProxy } from "ajax-hook"
-import { upload, test } from "./api"
-import axios from "axios";
+import { initWS } from "./stomp"
 
+
+const ws = initWS('127.0.0.1', '8080', 'http')
 let DATA_MAP = {}
 export function init() {
-    DATA_MAP = {}
-    proxy({
-        //请求发起前进入
-        onRequest: async (config, handler) => {
-            console.log(`config: ${_stringify(config)}`)
-            await recorderData(config)
-            handler.next(config);
-        },
-        //请求发生错误时进入，比如超时；注意，不包括http状态码错误，如404仍然会认为请求成功
-        onError: async (err, handler) => {
-            console.log(`error: ${_stringify(err)}`)
-            await recorderData(err)
-            handler.next(err)
-        },
-        //请求成功后进入
-        onResponse: async (response, handler) => {
-            console.log(`response: ${_stringify(response)}`)
-            await recorderData(response)
-            handler.next(response)
-        }
+    return new Promise((resolve, reject) => {
+        ws.connect({}).then(res => {
+            console.log(`connect res: ${_stringify(res)}`)
+            ws.subscribe((msg) => {
+                console.log(`subscribe msg: ${JSON.stringify(msg)}`)
+            })
+            proxy({
+                //请求发起前进入
+                onRequest: async (config, handler) => {
+                    console.log(`config: ${_stringify(config)}`)
+                    await recorderData(config)
+                    handler.next(config);
+                },
+                //请求发生错误时进入，比如超时；注意，不包括http状态码错误，如404仍然会认为请求成功
+                onError: async (err, handler) => {
+                    console.log(`error: ${_stringify(err)}`)
+                    await recorderData(err)
+                    handler.next(err)
+                },
+                //请求成功后进入
+                onResponse: async (response, handler) => {
+                    console.log(`response: ${_stringify(response)}`)
+                    await recorderData(response)
+                    handler.next(response)
+                }
+            })
+            DATA_MAP = {}
+            console.log('init success...')
+            resolve()
+        }).catch(error => {
+            console.error(`init error...${_stringify(error)}`)
+            reject(error)
+        })
     })
-    console.log('init success...')
 }
 
 export function destroy() {
     unProxy()
+    ws.disconnect()
     DATA_MAP = {}
     console.log('destroy success...')
 }
@@ -72,18 +86,21 @@ function recorderData(data) {
 }
 
 async function uploadData(key, resolve, reject) {
+    console.log(`key: ${key}`)
     const data = DATA_MAP[key]
     console.log(`data: uploadData.......${_stringify(data)}`)
-    await axios.get('https://bird.ioliu.cn/v1').then(res => {
-        console.log(`response: ${res}`)
-    })
-    await test().then(res => {
-        console.log(`res: ${res}`)
+
+    ws.sendMsg(data)
+    setTimeout(() => {
         resolve()
-    }).catch(error => {
-        console.log(`error: ${error}`)
-        reject(error)
-    })
+    }, 3000)
+    // await upload(data).then(res => {
+    //     console.log(`res: ${res}`)
+    //     resolve()
+    // }).catch(error => {
+    //     console.log(`error: ${error}`)
+    //     reject(error)
+    // })
 }
 
 function _stringify(obj) {

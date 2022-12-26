@@ -4,14 +4,13 @@ const service = axios.create({
     headers: {
         'Content-Type': 'application/json;charset=utf-8'
     },
-    // withCredentials: true,
+    withCredentials: true,
     timeout: 3000
 })
 
 // 请求拦截器
 service.interceptors.request.use(
     config => {
-        console.log(config.url)
         return config
     },
     (err) => {
@@ -27,8 +26,8 @@ service.interceptors.response.use(
         return response
     },
     (err)=>{
-        console.log(JSON.stringify(err))
         err.message = '请求超时或服务器异常，请检查网络或联系管理员！'
+        console.log(JSON.stringify(err))
         return Promise.reject(err)
     }
 )

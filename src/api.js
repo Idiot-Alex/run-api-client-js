@@ -2,7 +2,7 @@ import service from './axios-server'
 
 export function upload(data) {
     return service({
-        url: `http://192.168.1.13:8080/client-js/upload`,
+        url: `http://121.42.160.109:8080/client-js/upload`,
         method: 'POST',
         data: data
     })

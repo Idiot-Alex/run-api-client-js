@@ -5,7 +5,8 @@
   "main": "dist/bundle.js",
   "scripts": {
     "build": "rimraf ./dist && rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "test1": "jest tests/proxy.test.js"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,9 @@
   },
   "dependencies": {
     "ajax-hook": "^2.1.3",
-    "axios": "^1.2.1"
+    "axios": "^1.2.1",
+    "lodash": "^4.17.21",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3"
   }
 }

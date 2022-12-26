@@ -32,7 +32,6 @@ export function init() {
                 }
             })
             DATA_MAP = {}
-            console.log('init success...')
             resolve()
         }).catch(error => {
             console.error(`init error...${_stringify(error)}`)
@@ -42,10 +41,12 @@ export function init() {
 }
 
 export function destroy() {
-    unProxy()
-    ws.disconnect()
-    DATA_MAP = {}
-    console.log('destroy success...')
+    return new Promise(resolve => {
+        unProxy()
+        ws.disconnect()
+        DATA_MAP = {}
+        resolve()
+    })
 }
 
 /**
@@ -75,9 +76,14 @@ function recorderData(data) {
             uploadData(key, resolve, reject)
         } else {
             // XhrRequestConfig
+            const {
+                headers, method, url, async, withCredentials, body
+            } = data
             const key = data?.url
             DATA_MAP[key] = {
-                config: data
+                config: {
+                    headers, method, url, async, withCredentials, body
+                }
             }
             console.log(`dataMap: ${_stringify(DATA_MAP)}`)
             resolve()

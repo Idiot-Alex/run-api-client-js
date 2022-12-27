@@ -15,10 +15,10 @@ const config = {
         // exports: "default",
     },
     plugins: [
-        // replace({
-        //     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        //     'process.env.NODE_DEBUG': JSON.stringify(process.env.NODE_DEBUG),
-        // }),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.NODE_DEBUG': JSON.stringify(process.env.NODE_DEBUG),
+        }),
         resolve({
             preferBuiltins: true
         }),

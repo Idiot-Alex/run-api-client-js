@@ -1,7 +1,5 @@
 import RunApi from "dist/bundle"
 import axios from "axios"
-import { async } from "../dist/bundle"
-// import {test} from "../src/api";
 
 // edge://flags/
 // chrome://flags/#block-insecure-private-network-requests

@@ -2,10 +2,11 @@ import { proxy, unProxy } from "ajax-hook"
 import { initWS } from "./stomp"
 
 
-const ws = initWS('127.0.0.1', '8080', 'http')
+let ws = null
 let DATA_MAP = {}
 export function init() {
     return new Promise((resolve, reject) => {
+        ws = initWS('127.0.0.1', '8080', 'http')
         ws.connect({}).then(res => {
             console.log(`connect res: ${_stringify(res)}`)
             ws.subscribe((msg) => {

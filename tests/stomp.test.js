@@ -22,7 +22,7 @@ describe('test stomp js', function() {
                 ws.sendMsg('hello, world')
                 setTimeout(() => {
                     resolve()
-                }, 3000)
+                }, 2000)
             })
         })
     })

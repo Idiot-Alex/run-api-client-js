@@ -98,16 +98,7 @@ async function uploadData(key, resolve, reject) {
     console.log(`data: uploadData.......${_stringify(data)}`)
 
     ws.sendMsg(data)
-    setTimeout(() => {
-        resolve()
-    }, 3000)
-    // await upload(data).then(res => {
-    //     console.log(`res: ${res}`)
-    //     resolve()
-    // }).catch(error => {
-    //     console.log(`error: ${error}`)
-    //     reject(error)
-    // })
+    resolve()
 }
 
 function _stringify(obj) {

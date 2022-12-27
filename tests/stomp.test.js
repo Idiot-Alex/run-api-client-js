@@ -1,7 +1,7 @@
-import RunApi from "dist/bundle"
+import { initWS } from "src/stomp"
 
 describe('test stomp js', function() {
-    const ws = RunApi.ws('127.0.0.1', '8080', 'http', '/stomp/endpoint')
+    const ws = initWS('127.0.0.1', '8080', 'http', '/stomp/endpoint')
 
     beforeEach(() => {
         ws.connect()
